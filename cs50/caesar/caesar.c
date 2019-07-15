@@ -43,34 +43,41 @@ int main(int argc, string argv[])
              }
 
              string user_str = get_string("plaintext: ");
-             printf("key: %i\n",key); 
              
              for(int j = 0, m = strlen(user_str); j<m; j++)
                 {
+                    int new_val = user_str[j]+key;
                     //check if char in string is within lower-case letter range
                     if(user_str[j]>96 && user_str[j]<123)
                     {
-                        printf("%c\n%i\n",user_str[j],user_str[j]);
-                        int new_val = user_str[j]+key;
-                        //check if new value exceeds lower-case range
-                        printf("user_str:%i\nnew_val:%i\n",user_str[j],new_val);
-                        //cast j as integer
                         if(new_val>122)
                         {
-                            printf("new:%i\n",new_val%26);
                            //if it does, correct key so that it 'loops back' 
                            //from beginning of character range
                            
-                           printf("user_char:%c user_int:%i key:%i\n",user_str[j],user_str[j],key);
-                           int diff = new_val%26;
-                           user_str[j]-=diff;
-                           printf("final: %i %c || diff: %i\n",user_str[j]+diff, user_str[j],diff);
+                           //97 is first character in range, so add remainder
+                           //to 96 to get new char value that is still within
+                           //char range
+                           user_str[j]=97+new_val%26;
+                        }
+                        else
+                        {
+                            user_str[j]=new_val;
                         }
                     }
-                   // else if()
-                    //{
-                        
-                    //}
+                    //same serties of checks and transformations applied to chars in
+                    //capital letter range
+                    else if(user_str[j]>64 && user_str[j]<91)
+                    {
+                       if(new_val>90)
+                       {
+                           user_str[j]=65+new_val%26;
+                       }
+                       else
+                       {
+                           user_str[j]=new_val;
+                       }
+                    }
                      
                 }
 
