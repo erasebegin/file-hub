@@ -46,42 +46,57 @@ int main(int argc, string argv[])
              
              for(int j = 0, m = strlen(user_str); j<m; j++)
                 {
-                    int new_val = user_str[j]+key;
-                    //check if char in string is within lower-case letter range
+                    //get result of transformation using key provided
+                    int pos1 = user_str[j]+key;
+                    //check if char entered by user is within lower-case letter range
                     if(user_str[j]>96 && user_str[j]<123)
                     {
-                        if(new_val>122)
+                        //if it is, check that when key is added it does not exceed
+                        //character range
+                        if(pos1>123)
                         {
-                           //if it does, correct key so that it 'loops back' 
-                           //from beginning of character range
-                           
-                           //97 is first character in range, so add remainder
-                           //to 96 to get new char value that is still within
-                           //char range
-                           user_str[j]=97+new_val%26;
+                            //create new relative key using remainder
+                            int key2 = key%26;
+                            //find new char position based on new key
+                            int pos2 = user_str[j]+key2;
+                            //if new char position still exceeds lower-case range...
+                            if(pos2>123)
+                            {
+                                //create a new key using the amount that range is exceeded by
+                                int key3 = (122-user_str[j]-key2)*-1;
+                                printf("pos2: %i || key3: %i || diff: %i\n",pos2, key3, diff);
+                                //get new char position from beginning of alphabet (96)
+                                int pos3 = 96+key3;
+                                user_str[j] = pos3;
+                                printf("pos3: %i\n",pos3);
+                            }
+                            else
+                            {
+                                user_str[j]=pos2;
+                            }
                         }
                         else
                         {
-                            user_str[j]=new_val;
+                            user_str[j]=pos1;
                         }
                     }
                     //same serties of checks and transformations applied to chars in
                     //capital letter range
                     else if(user_str[j]>64 && user_str[j]<91)
                     {
-                       if(new_val>90)
+                       if(pos1>91)
                        {
-                           user_str[j]=65+new_val%26;
+                           user_str[j]=64+pos1%26;
                        }
                        else
                        {
-                           user_str[j]=new_val;
+                           user_str[j]=pos1;
                        }
                     }
                      
                 }
 
-                printf("cyphertext: %s\n", user_str);            }
+                printf("ciphertext: %s\n", user_str);            }
 
             else
             {
