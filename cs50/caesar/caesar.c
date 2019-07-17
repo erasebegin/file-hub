@@ -53,20 +53,49 @@ int main(int argc, string argv[])
                     {
                         //if it is, check that when key is added it does not exceed
                         //character range
-                        if(pos1>123)
+                        if(pos1>122)
                         {
                             //create new relative key using remainder
                             int key2 = key%26;
                             //find new char position based on new key
                             int pos2 = user_str[j]+key2;
                             //if new char position still exceeds lower-case range...
-                            if(pos2>123)
+                            if(pos2>122)
                             {
                                 //create a new key using the amount that range is exceeded by
                                 int key3 = (122-user_str[j]-key2)*-1;
-                                printf("pos2: %i || key3: %i || diff: %i\n",pos2, key3, diff);
                                 //get new char position from beginning of alphabet (96)
                                 int pos3 = 96+key3;
+                                user_str[j] = pos3;
+                            }
+                            else
+                            {
+                                user_str[j]=pos2;
+                            }
+                        }
+                        else
+                        {
+                            user_str[j]=pos1;
+                        }
+                    }
+                    //same series of checks and transformations applied to chars in
+                    //capital letter range
+                    else if(user_str[j]>64 && user_str[j]<91)
+                    {
+                       if(pos1>91)
+                        {
+                            //create new relative key using remainder
+                            int key2 = key%26;
+                            //find new char position based on new key
+                            int pos2 = user_str[j]+key2;
+                            //if new char position still exceeds lower-case range...
+                            if(pos2>91)
+                            {
+                                //create a new key using the amount that range is exceeded by
+                                int key3 = (90-user_str[j]-key2)*-1;
+                                printf("pos2: %i || key3: %i\n",pos2, key3);
+                                //get new char position from beginning of alphabet (96)
+                                int pos3 = 64+key3;
                                 user_str[j] = pos3;
                                 printf("pos3: %i\n",pos3);
                             }
@@ -80,19 +109,6 @@ int main(int argc, string argv[])
                             user_str[j]=pos1;
                         }
                     }
-                    //same serties of checks and transformations applied to chars in
-                    //capital letter range
-                    else if(user_str[j]>64 && user_str[j]<91)
-                    {
-                       if(pos1>91)
-                       {
-                           user_str[j]=64+pos1%26;
-                       }
-                       else
-                       {
-                           user_str[j]=pos1;
-                       }
-                    }
                      
                 }
 
@@ -101,11 +117,13 @@ int main(int argc, string argv[])
             else
             {
                 printf("You did not enter an integer value.\n");
+                return 1;
             }
         }
 
     else 
     {
-        printf("you did not enter a key\n");                     
+        printf("you did not enter a key\n");    
+        return 1;                 
     }            
 }
