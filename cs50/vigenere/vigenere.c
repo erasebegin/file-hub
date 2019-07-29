@@ -54,12 +54,10 @@ int main(int argc, string argv[])
                     //if char range exceeded after incrementing by key...
                     if(plaintext[k]+key[kpos]>122)
                     {
-                        //get current char value
-                        int pos1 = plaintext[k]+key[kpos];
                         //create new key
-                        int key2 = 122-pos1;
+                        int key2 = (122-plaintext[k]-key[kpos])*-1;
                         //increment by new key instead
-                        plaintext[k]+=key2;
+                        plaintext[k] = 96+key2;
                     }
                     else
                     {
@@ -70,9 +68,9 @@ int main(int argc, string argv[])
                 {
                     if(plaintext[k]+key[kpos]>90)
                     {
-                        int pos1 = plaintext[k]+key[kpos];
-                        int key2 = 90-pos1;
-                        plaintext[k]+=key2;
+                        int key2 = (90-plaintext[k]-key[kpos])*-1;
+                        //increment by new key instead
+                        plaintext[k] = 64+key2;
                     }
                     else
                     {
@@ -80,13 +78,16 @@ int main(int argc, string argv[])
                     }
                 }
 
-                //printf("kpos: %i || ptext: %i || keyval: %i\n",kpos,plaintext[k], key[kpos]);
+                printf("kpos: %i || ptext: %i || keyval: %i\n",kpos,plaintext[k], key[kpos]);
 
                 //check if position of key has reached end, if not, move forward one place
                 //if it has, reset to 0
-                if(kpos<n)
+                if(kpos<n-1)
                 {
-                    kpos++;
+                    //if(plaintext[k]!=32 && plaintext[k]!=44)
+                    //{
+                        kpos++;
+                    //}
                 }
                 else
                 {
