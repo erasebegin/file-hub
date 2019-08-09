@@ -1,4 +1,4 @@
-// Copies a BMP file
+// Resizes a 24-bit BMP file
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,6 +55,15 @@ int main(int argc, char *argv[])
         return 4;
     }
 
+    //alter BITMAPINFOHEADER(bi) according to user input
+    //BUG
+    bi.biWidth*=factor;
+    bi.biHeight*=factor;
+
+    //generate new bfSize using new dimensions multiplied by number of bytes per pixel 
+    //and then adding the size of the metadata
+    bf.bfSize=(bi.biWidth*bi.biHeight*3)+sizeof(BITMAPFILEHEADER)+sizeof(BITMAPINFOHEADER);
+    printf("bfSize: %i", (int)bf.bfSize);
     // write outfile's BITMAPFILEHEADER
     fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
 
